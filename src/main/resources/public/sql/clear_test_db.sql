@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS testwebshop, testwebshopAnalytics CASCADE;
