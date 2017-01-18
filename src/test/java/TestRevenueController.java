@@ -27,15 +27,15 @@ public class TestRevenueController {
 
     @Before
     public void setUp() throws ParseException, IOException {
-        AbstractDaoJDBC.setConnection("test_connection.properties");
-        startDate = format.parse("2017-01-16 00:00:00");
-        stopDate = format.parse("2017-01-18 14:45:00");
+        AbstractDaoJDBC.setConnection("connection.properties");
+        startDate = format.parse("2017-01-10 00:00:00");
+        stopDate = format.parse("2017-01-12 14:45:00");
     }
 
     @Test
     public void testTotalRevenue() throws SQLException {
         Float result = totalRevenue(1);
-        Float expected = (float) 30;
+        Float expected = (float) 20;
         assertEquals(expected, result);
     }
 
@@ -43,7 +43,7 @@ public class TestRevenueController {
     public void testRevenueByTime() {
         Float result = revenueByTime(1,
                 new Timestamp(startDate.getTime()), new Timestamp(stopDate.getTime()));
-        Float expected = (float) 30;
+        Float expected = (float) 20;
         assertEquals(expected, result);
     }
 }

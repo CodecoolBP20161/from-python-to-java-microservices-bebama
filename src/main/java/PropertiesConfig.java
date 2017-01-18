@@ -16,10 +16,10 @@ public class PropertiesConfig {
 
         try {
 
-            output = new FileOutputStream("./src/main/resources/test_connection.properties");
+            output = new FileOutputStream("./src/main/resources/connection.properties");
 
             // set the properties value
-            prop.setProperty("DBURL", "jdbc:postgresql://localhost:5432/testwebshopAnalytics");
+            prop.setProperty("DBURL", "jdbc:postgresql://localhost:5432/webshopAnalytics");
             prop.setProperty("DB_USER", "postgres");
             prop.setProperty("DB_PASSWORD", "postgres");
 

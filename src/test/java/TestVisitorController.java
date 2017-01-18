@@ -26,7 +26,7 @@ public class TestVisitorController {
 
     @Before
     public void setUp() throws ParseException, IOException {
-        AbstractDaoJDBC.setConnection("test_connection.properties");
+        AbstractDaoJDBC.setConnection("connection.properties");
         startDate = format.parse("2017-01-11 00:00:00");
         stopDate = format.parse("2017-01-11 16:45:00");
     }
