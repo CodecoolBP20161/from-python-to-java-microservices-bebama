@@ -14,16 +14,18 @@ import java.security.InvalidParameterException;
 import java.security.spec.InvalidParameterSpecException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
-public class DataController extends AbstractController{
+public class DataController extends AbstractController {
 
     protected APIService apiService;
     private Webshop webshop;
     private Date start = null;
     private Date end = null;
 
-    public DataController(){
+    public DataController() {
         this.apiService = new APIService();
     }
 
@@ -31,7 +33,9 @@ public class DataController extends AbstractController{
         try {
             checkParams(req);
         } catch (Exception e) {
-            return convertMapToJSONString(new HashMap<String, String>(){{put("error", e.getMessage());}});
+            return convertMapToJSONString(new HashMap<String, String>() {{
+                put("error", e.getMessage());
+            }});
         }
         this.apiService.visitorCount(collectData(req));
         this.apiService.visitTimeCount(collectData(req));
@@ -43,7 +47,9 @@ public class DataController extends AbstractController{
         try {
             checkParams(req);
         } catch (Exception e) {
-            return convertMapToJSONString(new HashMap<String, String>(){{put("error", e.getMessage());}});
+            return convertMapToJSONString(new HashMap<String, String>() {{
+                put("error", e.getMessage());
+            }});
         }
         this.apiService.visitorCount(collectData(req));
         return convertMapToJSONString(this.apiService.getParams());
@@ -54,7 +60,9 @@ public class DataController extends AbstractController{
         try {
             checkParams(req);
         } catch (Exception e) {
-            return convertMapToJSONString(new HashMap<String, String>(){{put("error", e.getMessage());}});
+            return convertMapToJSONString(new HashMap<String, String>() {{
+                put("error", e.getMessage());
+            }});
         }
         this.apiService.visitTimeCount(collectData(req));
         return convertMapToJSONString(this.apiService.getParams());
@@ -64,20 +72,22 @@ public class DataController extends AbstractController{
         try {
             checkParams(req);
         } catch (Exception e) {
-            return convertMapToJSONString(new HashMap<String, String>(){{put("error", e.getMessage());}});
+            return convertMapToJSONString(new HashMap<String, String>() {{
+                put("error", e.getMessage());
+            }});
         }
         this.apiService.locationVisits(collectLocation(req));
         return convertMapToJSONString(this.apiService.getParams());
     }
 
     protected void checkParams(Request req) throws InvalidParameterSpecException, SQLException {
-        this.webshop = new WebshopDaoJDBC().findByApyKey(req.queryParams("apikey"));
-        if (req.queryParams("apikey") == null) {
-            throw new InvalidParameterSpecException("ApiKey is required");
+        this.webshop = new WebshopDaoJDBC().findByApyKey(req.queryParams("apiKey"));
+        if (req.queryParams("apiKey") == null) {
+            throw new InvalidParameterSpecException("apiKey is required");
         } else if (this.webshop == null) {
             throw new InvalidParameterException("Invalid apiKey");
-        } else if (req.queryParams().size() == 3){
-            if (req.queryParams("start") == null || req.queryParams("end") == null){
+        } else if (req.queryParams().size() == 3) {
+            if (req.queryParams("start") == null || req.queryParams("end") == null) {
                 throw new InvalidParameterSpecException("Invalid parameters");
             } else {
                 try {
@@ -91,28 +101,28 @@ public class DataController extends AbstractController{
                     throw new InvalidParameterException("Invalid end parameter");
                 }
             }
-        } else if (req.queryParams().size() != 1 && req.queryParams().size() != 3){
+        } else if (req.queryParams().size() != 1 && req.queryParams().size() != 3) {
             throw new InvalidParameterSpecException("Invalid number of parameters");
         }
         this.apiService.setParams(this.webshop.getName(), this.start, this.end);
     }
 
     private List<Analytics> collectData(Request req) throws SQLException {
-        if(this.start == null || this.end == null) {
-            return new AnalyticsDaoJDBC().findByWebshop(req.queryParams("apikey"));
+        if (this.start == null || this.end == null) {
+            return new AnalyticsDaoJDBC().findByWebshop(req.queryParams("apiKey"));
         } else {
             return new AnalyticsDaoJDBC().findByWebshopTime(
-                    req.queryParams("apikey"),
+                    req.queryParams("apiKey"),
                     convertToTimeStamp(this.start),
                     convertToTimeStamp(this.end));
         }
     }
 
     private List<LocationVisitor> collectLocation(Request req) throws SQLException {
-        if(this.start == null || this.end == null) {
-            return new LocationVisitorDaoJDBC().locationsByWebshop(req.queryParams("apikey"));
+        if (this.start == null || this.end == null) {
+            return new LocationVisitorDaoJDBC().locationsByWebshop(req.queryParams("apiKey"));
         } else {
-            return new LocationVisitorDaoJDBC().locationsByWebshopTime(req.queryParams("apikey"),
+            return new LocationVisitorDaoJDBC().locationsByWebshopTime(req.queryParams("apiKey"),
                     convertToTimeStamp(this.start),
                     convertToTimeStamp(this.end));
         }

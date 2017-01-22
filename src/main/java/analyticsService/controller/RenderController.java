@@ -5,12 +5,11 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RenderController extends AbstractController{
+public class RenderController extends AbstractController {
 
     private DataController dataController = new DataController();
 
@@ -25,9 +24,11 @@ public class RenderController extends AbstractController{
         try {
             dataController.checkParams(req);
         } catch (Exception e) {
-            return new ModelAndView(new HashMap<String, String>() {{put("error", e.getMessage());}}, "error");
+            return new ModelAndView(new HashMap<String, String>() {{
+                put("error", e.getMessage());
+            }}, "error");
         }
-        params.put("webshop", new WebshopDaoJDBC().findByApyKey(req.queryParams("apikey")));
+        params.put("webshop", new WebshopDaoJDBC().findByApyKey(req.queryParams("apiKey")));
         this.dataController.api(req, res);
         params.put("analytics", this.dataController.apiService.getParams());
         return new ModelAndView(params, "webshop_menu");
@@ -42,9 +43,11 @@ public class RenderController extends AbstractController{
         try {
             dataController.checkParams(req);
         } catch (Exception e) {
-            return new ModelAndView(new HashMap<String, String>() {{put("error", e.getMessage());}}, "error");
+            return new ModelAndView(new HashMap<String, String>() {{
+                put("error", e.getMessage());
+            }}, "error");
         }
-        params.put("webshop", new WebshopDaoJDBC().findByApyKey(req.queryParams("apikey")));
+        params.put("webshop", new WebshopDaoJDBC().findByApyKey(req.queryParams("apiKey")));
         return new ModelAndView(params, "registered");
     }
 }

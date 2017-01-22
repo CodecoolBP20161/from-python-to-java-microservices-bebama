@@ -37,7 +37,9 @@ public abstract class AbstractController {
         }
     }
 
-    protected static String convertMapToJSONString(Map map){
-        return (new JSONObject(){{putAll(map);}}).toString();
+    protected static String convertMapToJSONString(Map map) {
+        return (new JSONObject() {{
+            putAll(map);
+        }}).toString();
     }
 }
