@@ -16,11 +16,11 @@
 
     <div class="container-fluid">
         <div th:each="webshop,iterStat : ${webshops}">
-            <a th:href="'http://localhost:60000/webshop?apikey='+${webshop.apikey}"><p th:text="${webshop.name}"></p></a>
+            <a th:href="'http://localhost:60000/webshop?apiKey='+${webshop.apikey}"><p th:text="${webshop.name}"></p></a>
         </div>
         <a href="http://localhost:60000/register"><input type="button" value="register" /></a>
     </div>
-    <script>var apiKey="58EDB2AAA3E1D2D67210949271F53DE68DBE4A2EFF64991F253F778DF0CECD20"</script>
+    <script>var apiKey="C1165E012F5638B9199B5A31E17B55C01CC55A6F670FADE62CC88D4E1D1C0C15"</script>
 
     <script src="http://localhost:60000/js/locate_visitor.js"></script>
 
