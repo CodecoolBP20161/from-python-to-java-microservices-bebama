@@ -19,7 +19,7 @@ import java.util.Date;
 /**
  * Created by balazsando on 2017.01.16..
  */
-public class TrackingController extends AbstractController{
+public class TrackingController extends AbstractController {
 
     public Response stopSession(Request req, Response res) throws SQLException {
         String time = req.queryParams("time");
@@ -29,7 +29,7 @@ public class TrackingController extends AbstractController{
     }
 
     public Response startSession(Request req, Response res) throws SQLException {
-        Webshop webshop = new WebshopDaoJDBC().findByApyKey(req.queryParams("apikey"));
+        Webshop webshop = new WebshopDaoJDBC().findByApyKey(req.queryParams("apiKey"));
         String time = req.queryParams("time");
         Date date = new Date(Long.parseLong(time));
         new AnalyticsDaoJDBC().addData(new Analytics(webshop, req.session().id(), convertToTimeStamp(date), convertToTimeStamp(date), null));
@@ -40,14 +40,14 @@ public class TrackingController extends AbstractController{
         JSONObject jsonLocation = (JSONObject) new JSONParser().parse(req.queryParams().iterator().next());
         LocationModel location = new LocationModel(jsonLocation.get("city").toString(),
                 jsonLocation.get("country").toString(), jsonLocation.get("countryCode").toString());
-        Webshop webshop = new WebshopDaoJDBC().findByApyKey(req.queryParams("apikey"));
+        Webshop webshop = new WebshopDaoJDBC().findByApyKey(req.queryParams("apiKey"));
         new AnalyticsDaoJDBC().addData(new Analytics(webshop, req.session().id(), null, null, location));
         return res;
     }
 
     public Response registerWebshop(Request req, Response res) throws UnsupportedEncodingException, SQLException, NoSuchAlgorithmException {
         new WebshopDaoJDBC().add(new Webshop(req.queryParams("ws_name")));
-        res.redirect("/registered?apikey="+ SaltHasher.hashString(req.queryParams("ws_name")));
+        res.redirect("/registered?apiKey=" + SaltHasher.hashString(req.queryParams("ws_name")));
         return res;
     }
 }
