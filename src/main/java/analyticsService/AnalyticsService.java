@@ -1,7 +1,8 @@
 package analyticsService;
 
-import analyticsService.controller.APIController;
-import analyticsService.controller.LocationController;
+import analyticsService.controller.DataController;
+import analyticsService.controller.RenderController;
+import analyticsService.controller.TrackingController;
 import analyticsService.dao.JDBC.AbstractDaoJDBC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,16 +12,14 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
-public class Server {
-    private static final Logger logger = LoggerFactory.getLogger(Server.class);
+public class AnalyticsService {
+    private static final Logger logger = LoggerFactory.getLogger(AnalyticsService.class);
     private static final int PORT = 60000;
-
-
-    private static APIController controller;
 
     public static void main(String[] args) throws IOException {
 
@@ -41,13 +40,17 @@ public class Server {
             logger.error("Error while processing request", exception);
         });
 
+        exception(SQLException.class, (exception, request, response) -> {
+            response.status(500);
+            response.body(String.format("SQL error, maybe DB server disconnected? : %s", exception.getMessage()));
+            logger.error("Error while processing request", exception);
+        });
+
         exception(Exception.class, (exception, request, response) -> {
             response.status(500);
             response.body(String.format("Unexpected error occurred: %s", exception.getMessage()));
             logger.error("Error while processing request", exception);
         });
-
-        controller = new APIController();
 
         // --- TEMPLATE ENGINE ---
         TemplateResolver templateResolver = new TemplateResolver();
@@ -58,19 +61,23 @@ public class Server {
         templateResolver.setResourceResolver(new ClassLoaderResourceResolver());
 
         // --- ROUTES ---
-        get("/", controller::renderMain, new ThymeleafTemplateEngine(templateResolver));
-        get("/api", controller::api);
-        get("/api/visitor_count", controller::visitorCounter);
-        get("/api/visit_time_count", controller::visitTimeCounter);
-        get("/api/location_visits", controller::locationVisits);
-        get("stopTime", controller::stopSession);
-        get("/api/revenue", controller::countRevenue);
-        get("/startTime", controller::startSession);
-        post("/get_location", LocationController::getData);
+        get("/api", new DataController()::api);
+        get("/api/visitors", new DataController()::visitorCount);
+        get("/api/times", new DataController()::visitTimeCount);
+        get("/api/locations", new DataController()::locationVisits);
+        get("/startTime", new TrackingController()::startSession);
+        get("/stopTime", new TrackingController()::stopSession);
+        post("/get_location", new TrackingController()::getData);
+        get("/webshop", new RenderController()::renderWebshop, new ThymeleafTemplateEngine(templateResolver));
+        get("/register", new RenderController()::renderRegister, new ThymeleafTemplateEngine(templateResolver));
+        post("/register", new TrackingController()::registerWebshop);
+        get("registered", new RenderController()::renderRegistered, new ThymeleafTemplateEngine(templateResolver));
+        get("/", new RenderController()::renderMain, new ThymeleafTemplateEngine(templateResolver));
+
 
         enableDebugScreen();
 
-        logger.info("Server started on port " + PORT);
+        logger.info("AnalyticsService started on port " + PORT);
 
     }
 }

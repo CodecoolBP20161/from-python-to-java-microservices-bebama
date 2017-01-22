@@ -6,8 +6,8 @@ import java.util.List;
 import java.sql.*;
 
 public interface AnalyticsDao {
-    void add(Analytics model);
-    List<Analytics> findByWebshop(String apiKey);
-    List<Analytics> findByWebshopTime(String apiKey, Timestamp start, Timestamp end);
-    List<Analytics> findSessionId(String sessionId);
+    void addData(Analytics model) throws Exception;
+    List<Analytics> findBySessionId(String sessionId) throws Exception;
+    List<Analytics> findByWebshop(String apiKey) throws Exception;
+    List<Analytics> findByWebshopTime(String apiKey, Timestamp start, Timestamp end) throws Exception;
 }

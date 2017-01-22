@@ -2,16 +2,18 @@ package analyticsService.dao.JDBC;
 
 import analyticsService.SaltHasher;
 import analyticsService.dao.WebshopDao;
-import analyticsService.model.Analytics;
-import analyticsService.model.LocationModel;
 import analyticsService.model.Webshop;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebshopDaoJDBC extends AbstractDaoJDBC implements WebshopDao {
 
     @Override
-    public void add(Webshop webshop) throws Exception {
+    public void add(Webshop webshop) throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
         try (Connection connection = AbstractDaoJDBC.getConnection()) {
             PreparedStatement query;
             query = connection.prepareStatement("INSERT INTO webshop (ws_name, apiKey) VALUES (?, ?);");
@@ -24,44 +26,38 @@ public class WebshopDaoJDBC extends AbstractDaoJDBC implements WebshopDao {
     }
 
     @Override
-    public Webshop findByApyKey(String apiKey) {
-       return getWebshop("SELECT * FROM webshop WHERE apikey ='" + apiKey + "';");
-    }
-
-    private Webshop getWebshop(String query){
+    public Webshop findByApyKey(String apiKey) throws SQLException {
         Webshop result = null;
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(query);
+             ResultSet rs = statement.executeQuery("SELECT * FROM webshop WHERE apikey ='" + apiKey + "';");
         ) {
             while (rs.next()) {
-                result = new Webshop(rs.getString("ws_name"));
+                result = new Webshop(rs.getString("ws_name"), rs.getString("apikey"));
                 result.setId(rs.getInt("ws_id"));
-                result.setAnalyticsList(new AnalyticsDaoJDBC().findByWebshop(rs.getString("apikey")));
+                result.setAnalyticsList(new AnalyticsDaoJDBC().findByWebshop(apiKey));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SQLException(e.getMessage());
         }
         return result;
     }
 
-//    public static void main(String[] args) throws Exception {
-//        AbstractDaoJDBC.setConnection("connection.properties");
-//        Webshop webshop = new Webshop("codecoolwebshop");
-//        new WebshopDaoJDBC().add(webshop);
-//        String apiKey = SaltHasher.hashString(webshop.getName());
-//        webshop = new WebshopDaoJDBC().findByApyKey(apiKey);
-//        System.out.println(new WebshopDaoJDBC().findByApyKey(apiKey));
-//        LocationModel location = new LocationModel("Budapes", "Hungary", "HU");
-//        Analytics analytics = new Analytics(
-//                webshop, "efwefweefw",
-//                new Timestamp(System.currentTimeMillis()),
-//                new Timestamp(System.currentTimeMillis()),
-//                location,
-//                2345.3525f,
-//                "HUF");
-//        new AnalyticsDaoJDBC().add(analytics);
-//        System.out.println(new AnalyticsDaoJDBC().findByWebshop(apiKey).get(0));
-//        System.out.println(new LocationVisitorDaoJDBC().locationsByWebshop(apiKey));
-//    }
+    @Override
+    public List<Webshop> getAll() throws SQLException {
+        List<Webshop> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery("SELECT * FROM webshop");
+        ) {
+            while (rs.next()) {
+                Webshop webshop = new Webshop(rs.getString("ws_name"), rs.getString("apikey"));
+                webshop.setId(rs.getInt("ws_id"));
+                result.add(webshop);
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        }
+        return result;
+    }
 }
