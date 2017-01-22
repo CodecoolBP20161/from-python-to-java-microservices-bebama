@@ -53,5 +53,7 @@ Our service provides useful info on your webshop, with advanced filtering possib
 * The most common problem arises from a missing or wrong format apiKey. Please pay attention to spelling (```apiKey```), and copy all characters of your key.
   * In case of a missing apiKey, or a misspelled ```apiKey=``` in the request, you'll see the following error message: ```{"error":"ApiKey is required"}```
   * ```{"error":"Invalid apiKey"}``` will be displayed, if your apiKey is missing some charcters, or in an invalid format
-  * You either request data with only the apiKey, or with interval filters. in the latter case, please provide a ```start``` and an ```end``` time. If you miss any of those, you'll see ```{"error":"Invalid number of parameters"}```
-  * If you provide the right number of parameters, but misspelled either of them, you'll get ```{"error":"Invalid parameters"}```
+* You either request data with only the apiKey, or with interval filters. in the latter case, please provide a ```start``` and an ```end``` time. If you miss any of those, you'll see ```{"error":"Invalid number of parameters"}```
+* If you provide the right number of parameters, but misspelled either of them, you'll get ```{"error":"Invalid parameters"}```
+
+BeBaMa 2017 @makaimark @balazsando @cickib
