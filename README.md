@@ -56,4 +56,4 @@ Our service provides useful info on your webshop, with advanced filtering possib
 * You either request data with only the apiKey, or with interval filters. in the latter case, please provide a ```start``` and an ```end``` time. If you miss any of those, you'll see ```{"error":"Invalid number of parameters"}```
 * If you provide the right number of parameters, but misspelled either of them, you'll get ```{"error":"Invalid parameters"}```
 
-BeBaMa 2017 @makaimark @balazsando @cickib
+BeBaMa 2017 [@makaimark](https://github.com/makaimark) [@balazsando](https://github.com/balazsando) [@cickib](https://github.com/cickib)
