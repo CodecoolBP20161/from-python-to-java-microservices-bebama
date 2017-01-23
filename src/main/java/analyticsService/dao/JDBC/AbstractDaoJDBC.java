@@ -1,6 +1,6 @@
-package dao.JDBC;
+package analyticsService.dao.JDBC;
 
-import model.LocationModel;
+import analyticsService.model.LocationModel;
 
 import java.io.FileInputStream;
 import java.io.IOException;

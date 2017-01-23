@@ -1,4 +1,4 @@
-package model;
+package analyticsService.model;
 
 import org.apache.http.client.utils.URIBuilder;
 

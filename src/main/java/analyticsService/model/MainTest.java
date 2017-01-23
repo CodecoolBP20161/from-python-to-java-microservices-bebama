@@ -1,4 +1,4 @@
-package model;
+package analyticsService.model;
 
 import java.net.URISyntaxException;
 
