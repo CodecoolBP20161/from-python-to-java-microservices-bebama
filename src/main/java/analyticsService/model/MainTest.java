@@ -3,7 +3,7 @@ package analyticsService.model;
 
 import java.io.IOException;
 
-import static model.Graph.formTheData;
+import static analyticsService.model.Graph.formTheData;
 
 public class MainTest {
 
