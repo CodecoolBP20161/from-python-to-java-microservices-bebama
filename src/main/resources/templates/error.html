@@ -10,15 +10,12 @@
     <title>Bebamanalytics</title>
 </head>
 <body>
-    <div class="jumbotron text-center">
-        <h2>Bebamanalytics</h2>
-    </div>
+<div class="jumbotron text-center">
+    <h2>Bebamanalytics</h2>
+</div>
 
-    <div class="container-fluid">
-        <div th:each="webshop,iterStat : ${webshops}">
-            <a th:href="'http://localhost:60000/webshop?apiKey='+${webshop.apikey}"><p th:text="${webshop.name}"></p></a>
-        </div>
-        <a href="http://localhost:60000/register"><input type="button" value="register" /></a>
-    </div>
+<div class="container-fluid">
+    <p th:text="${error}"></p>
+</div>
 </body>
 </html>

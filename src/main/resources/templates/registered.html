@@ -10,15 +10,16 @@
     <title>Bebamanalytics</title>
 </head>
 <body>
-    <div class="jumbotron text-center">
-        <h2>Bebamanalytics</h2>
-    </div>
+<div class="jumbotron text-center">
+    <h2>Bebamanalytics</h2>
+</div>
 
-    <div class="container-fluid">
-        <div th:each="webshop,iterStat : ${webshops}">
-            <a th:href="'http://localhost:60000/webshop?apiKey='+${webshop.apikey}"><p th:text="${webshop.name}"></p></a>
-        </div>
-        <a href="http://localhost:60000/register"><input type="button" value="register" /></a>
-    </div>
+<div class="container-fluid">
+    <p><strong>copy the following code to your index template to provide our service with the necessary data:</strong></p>
+    <p th:text="'&#60;script&#62;var apiKey=&#34;'+${webshop.apikey}+'&#34;&#60;/script&#62;'"></p>
+    <p>&#60;script src=&#34;http://localhost:60000/js/locate_visitor.js&#34;&#62;&#60;/script&#62;</p>
+    <p>&#60;script src=&#34;http://localhost:60000/js/time_counter.js&#34;&#62;&#60;/script&#62;</p>
+    <a href="http://localhost:60000/"><input type="button" value="back" /></a>
+</div>
 </body>
 </html>

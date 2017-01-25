@@ -1,4 +1,4 @@
-package model;
+package analyticsService.model;
 
 public class LocationVisitor {
 
@@ -24,5 +24,9 @@ public class LocationVisitor {
 
     public void setVisitors(Integer visitors) {
         this.visitors = visitors;
+    }
+
+    public String toString(){
+        return "location: " + this.location + "\n visitors: " + this.visitors;
     }
 }

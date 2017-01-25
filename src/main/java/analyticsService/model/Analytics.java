@@ -1,28 +1,22 @@
-package model;
+package analyticsService.model;
 
 import java.sql.Timestamp;
-import java.util.Currency;
 
 public class Analytics {
 
     private Integer id;
-    private Integer webshopId;
+    private Webshop webshop;
     private String sessionId;
     private Timestamp startTime;
     private Timestamp endTime;
     private LocationModel location;
-    private Float amount;
-    private Currency currency;
 
-    public Analytics(Integer webshopID, String sessionId, Timestamp startTime, Timestamp endTime, LocationModel location, Float amount, String currency) {
-        this.webshopId = webshopID;
+    public Analytics(Webshop webshop, String sessionId, Timestamp startTime, Timestamp endTime, LocationModel location) {
+        this.webshop = webshop;
         this.sessionId = sessionId;
-        this.webshopId = webshopID;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
-        this.amount = amount;
-        this.currency = currency == null ? null : Currency.getInstance(currency);
     }
 
     public Integer getId() {
@@ -33,12 +27,12 @@ public class Analytics {
         this.id = id;
     }
 
-    public Integer getWebshopId() {
-        return webshopId;
+    public Webshop getWebshop() {
+        return webshop;
     }
 
-    public void setWebshopId(Integer webshopId) {
-        this.webshopId = webshopId;
+    public void setWebshop(Webshop webshop) {
+        this.webshop = webshop;
     }
 
     public String getSessionId() {
@@ -73,30 +67,12 @@ public class Analytics {
         this.location = location;
     }
 
-    public Float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
     public String toString() {
-        return "webshop: " + this.webshopId + "\n" +
+        return ": " + this.webshop + "\n" +
                 "session: " + this.sessionId + "\n" +
                 "start: " + this.startTime + "\n" +
                 "end: " + this.endTime + "\n" +
-                "location: " + this.location + "\n" +
-                "amount: " + this.amount + "\n" +
-                "currency: " + this.currency;
+                "location: " + this.location;
     }
 
     public Integer secondsSpent() {
