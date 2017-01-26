@@ -1,6 +1,7 @@
 package analyticsService;
 
 import analyticsService.controller.DataController;
+import analyticsService.controller.GraphController;
 import analyticsService.controller.RenderController;
 import analyticsService.controller.TrackingController;
 import analyticsService.dao.JDBC.AbstractDaoJDBC;
@@ -73,6 +74,7 @@ public class AnalyticsService {
         post("/register", new TrackingController()::registerWebshop);
         get("registered", new RenderController()::renderRegistered, new ThymeleafTemplateEngine(templateResolver));
         get("/", new RenderController()::renderMain, new ThymeleafTemplateEngine(templateResolver));
+        get("/graph", GraphController::createGraph);
 
 
         enableDebugScreen();
