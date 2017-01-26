@@ -4,7 +4,7 @@ if (window.XMLHttpRequest) {
 } else {
     startRequest = new ActiveXObject("Microsoft.XMLHTTP");
 }
-var url = "http://localhost:60000/startTime?time="+new Date().getTime()+"&apiKey=" + apiKey;
+var url = "http://localhost:60015/startTime?time="+new Date().getTime()+"&apiKey=" + apiKey;
 startRequest.open("GET",url,false);
 startRequest.send(null);
 
@@ -15,7 +15,7 @@ window.onbeforeunload = function(){
     } else {
         stopRequest = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    var url = "http://localhost:60000/stopTime?time="+new Date().getTime()+"&apiKey=" + apiKey;
+    var url = "http://localhost:60015/stopTime?time="+new Date().getTime()+"&apiKey=" + apiKey;
     stopRequest.open("GET",url,false);
     stopRequest.send(null);
 };

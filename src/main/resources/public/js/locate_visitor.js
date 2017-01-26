@@ -12,7 +12,7 @@ function getCoords() {
 function noLocation() {
     $.ajax({
             type: "POST",
-            url: "http://localhost:60000/get_location?apiKey=" + apiKey,
+            url: "http://localhost:60015/get_location?apiKey=" + apiKey,
             data: JSON.stringify({"city": "N/A", "country": "N/A", "countryCode": "N/A"})
         }
     );
@@ -50,7 +50,7 @@ function getCity(position) {
 function sendLocationData(city, country, countryCode) {
     $.ajax({
             type: "POST",
-            url: "http://localhost:60000/get_location",
+            url: "http://localhost:60015/get_location",
             data: JSON.stringify({"city": city, "country": country, "countryCode": countryCode})
         }
     );
