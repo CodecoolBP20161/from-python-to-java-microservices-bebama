@@ -9,7 +9,6 @@ import java.io.IOException;
 public class GraphController {
 
     public static String createGraph(Request req, Response res) throws IOException {
-       Graph.formTheData(req.queryParams("result"));
-        return "";
+       return Graph.formTheData(req.queryParams("result"));
     }
 }
