@@ -16,9 +16,9 @@
 
     <div class="container-fluid">
         <div th:each="webshop,iterStat : ${webshops}">
-            <a th:href="'http://localhost:60000/webshop?apiKey='+${webshop.apikey}"><p th:text="${webshop.name}"></p></a>
+            <a th:href="'/webshop?apiKey='+${webshop.apikey}"><p th:text="${webshop.name}"></p></a>
         </div>
-        <a href="http://localhost:60000/register"><input type="button" value="register" /></a>
+        <a href="/register"><input type="button" value="register" /></a>
     </div>
 </body>
 </html>

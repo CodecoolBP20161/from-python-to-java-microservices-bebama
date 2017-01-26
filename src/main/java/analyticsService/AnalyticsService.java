@@ -19,7 +19,7 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class AnalyticsService {
     private static final Logger logger = LoggerFactory.getLogger(AnalyticsService.class);
-    private static final int PORT = 60000;
+    private static final int PORT = 60015;
 
     public static void main(String[] args) throws IOException {
 
